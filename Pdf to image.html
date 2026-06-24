@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PDF to Image | ImageTools Pro</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:#fff;
+display:flex;
+justify-content:center;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:700px;
+background:rgba(255,255,255,.08);
+padding:25px;
+border-radius:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input,button{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+}
+
+button{
+background:#00e5ff;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#00bcd4;
+}
+
+#output img{
+width:100%;
+margin-top:20px;
+border-radius:10px;
+}
+</style>
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUBLISHER_ID"
+crossorigin="anonymous"></script>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ImageTools Pro</title>
+
+<meta name="description" content="Free Online Image Tools">
+<meta name="keywords" content="Image Resizer, Image Compressor, Image Converter, Crop Image, Image to PDF">
+<meta name="author" content="ImageTools Pro">
+
+</head>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📄 PDF to Image</h1>
+
+<input type="file" id="pdfFile" accept="application/pdf">
+
+<button onclick="convertPDF()">
+Convert PDF
+</button>
+
+<div id="output"></div>
+
+</div>
+
+<script>
+
+pdfjsLib.GlobalWorkerOptions.workerSrc=
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+async function convertPDF(){
+
+const file=document.getElementById("pdfFile").files[0];
+
+if(!file){
+alert("Select a PDF");
+return;
+}
+
+const buffer=await file.arrayBuffer();
+
+const pdf=await pdfjsLib.getDocument(buffer).promise;
+
+output.innerHTML="";
+
+for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
+
+const page=await pdf.getPage(pageNum);
+
+const viewport=page.getViewport({scale:2});
+
+const canvas=document.createElement("canvas");
+
+const ctx=canvas.getContext("2d");
+
+canvas.width=viewport.width;
+canvas.height=viewport.height;
+
+await page.render({
+canvasContext:ctx,
+viewport:viewport
+}).promise;
+
+const img=document.createElement("img");
+img.src=canvas.toDataURL("image/png");
+
+const link=document.createElement("a");
+link.href=img.src;
+link.download="page-"+pageNum+".png";
+
+const btn=document.createElement("button");
+btn.innerHTML="Download Page "+pageNum;
+
+link.appendChild(btn);
+
+output.appendChild(img);
+output.appendChild(link);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

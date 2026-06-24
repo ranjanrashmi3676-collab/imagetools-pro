@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Image to PDF | ImageTools Pro</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+color:#fff;
+}
+
+.container{
+width:100%;
+max-width:650px;
+background:rgba(255,255,255,.08);
+padding:25px;
+border-radius:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input,button{
+width:100%;
+padding:14px;
+margin:12px 0;
+border:none;
+border-radius:10px;
+}
+
+button{
+background:#00e5ff;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#00bcd4;
+}
+
+#preview img{
+width:100px;
+margin:5px;
+border-radius:8px;
+}
+</style>
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUBLISHER_ID"
+crossorigin="anonymous"></script>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ImageTools Pro</title>
+
+<meta name="description" content="Free Online Image Tools">
+<meta name="keywords" content="Image Resizer, Image Compressor, Image Converter, Crop Image, Image to PDF">
+<meta name="author" content="ImageTools Pro">
+
+</head>
+</head>
+<body>
+
+<div class="container">
+
+<h1>📄 Image to PDF</h1>
+
+<input
+type="file"
+id="images"
+accept="image/*"
+multiple>
+
+<div id="preview"></div>
+
+<button onclick="createPDF()">
+Create PDF
+</button>
+
+</div>
+
+<script>
+
+let files=[];
+
+images.onchange=function(e){
+
+files=[...e.target.files];
+
+preview.innerHTML="";
+
+files.forEach(file=>{
+
+const img=document.createElement("img");
+
+img.src=URL.createObjectURL(file);
+
+preview.appendChild(img);
+
+});
+
+}
+
+async function createPDF(){
+
+if(files.length==0){
+
+alert("Select images first");
+
+return;
+
+}
+
+const {jsPDF}=window.jspdf;
+
+const pdf=new jsPDF();
+
+for(let i=0;i<files.length;i++){
+
+const file=files[i];
+
+const data=await new Promise(resolve=>{
+
+const reader=new FileReader();
+
+reader.onload=e=>resolve(e.target.result);
+
+reader.readAsDataURL(file);
+
+});
+
+if(i>0){
+
+pdf.addPage();
+
+}
+
+pdf.addImage(data,"JPEG",10,10,190,250);
+
+}
+
+pdf.save("ImageToolsPro.pdf");
+
+}
+
+</script>
+
+</body>
+</html>

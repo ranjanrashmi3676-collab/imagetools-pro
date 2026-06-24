@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crop Image - ImageTools Pro</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+color:white;
+}
+
+.container{
+width:100%;
+max-width:600px;
+background:rgba(255,255,255,.08);
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:15px;
+background:#00e5ff;
+border:none;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#00bcd4;
+}
+
+img{
+width:100%;
+display:none;
+margin-top:20px;
+border-radius:10px;
+}
+
+canvas{
+display:none;
+}
+
+a{
+text-decoration:none;
+display:none;
+}
+</style>
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUBLISHER_ID"
+crossorigin="anonymous"></script>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ImageTools Pro</title>
+
+<meta name="description" content="Free Online Image Tools">
+<meta name="keywords" content="Image Resizer, Image Compressor, Image Converter, Crop Image, Image to PDF">
+<meta name="author" content="ImageTools Pro">
+
+</head>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✂ Crop Image</h1>
+
+<input type="file" id="upload" accept="image/*">
+
+<input type="number" id="x" placeholder="Start X">
+
+<input type="number" id="y" placeholder="Start Y">
+
+<input type="number" id="width" placeholder="Crop Width">
+
+<input type="number" id="height" placeholder="Crop Height">
+
+<button onclick="cropImage()">
+Crop Image
+</button>
+
+<img id="preview">
+
+<a id="download">
+<button type="button">
+Download Cropped Image
+</button>
+</a>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+<script>
+
+let img=new Image();
+
+document.getElementById("upload").onchange=function(e){
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+reader.onload=function(event){
+
+img.onload=function(){
+
+document.getElementById("x").value=0;
+document.getElementById("y").value=0;
+document.getElementById("width").value=img.width;
+document.getElementById("height").value=img.height;
+
+}
+
+img.src=event.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+function cropImage(){
+
+if(!img.src){
+
+alert("Upload image first");
+
+return;
+
+}
+
+const sx=parseInt(document.getElementById("x").value);
+const sy=parseInt(document.getElementById("y").value);
+const sw=parseInt(document.getElementById("width").value);
+const sh=parseInt(document.getElementById("height").value);
+
+const canvas=document.getElementById("canvas");
+
+canvas.width=sw;
+canvas.height=sh;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(
+img,
+sx,
+sy,
+sw,
+sh,
+0,
+0,
+sw,
+sh
+);
+
+canvas.toBlob(function(blob){
+
+const url=URL.createObjectURL(blob);
+
+document.getElementById("preview").src=url;
+document.getElementById("preview").style.display="block";
+
+const download=document.getElementById("download");
+
+download.href=url;
+download.download="cropped-image.png";
+download.style.display="block";
+
+},"image/png");
+
+}
+
+</script>
+
+</body>
+</html>

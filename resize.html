@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Image Resizer | ImageTools Pro</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+color:#fff;
+}
+
+.container{
+width:100%;
+max-width:700px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+padding:25px;
+border-radius:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:25px;
+}
+
+input[type=file]{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+background:#fff;
+color:#000;
+border-radius:10px;
+}
+
+.row{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.row input{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+}
+
+label{
+display:block;
+margin:15px 0 5px;
+}
+
+input[type=range]{
+width:100%;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:20px;
+background:#00e5ff;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#00bcd4;
+}
+
+img{
+width:100%;
+margin-top:20px;
+display:none;
+border-radius:15px;
+}
+
+a{
+text-decoration:none;
+}
+
+canvas{
+display:none;
+}
+
+</style>
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUBLISHER_ID"
+crossorigin="anonymous"></script>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ImageTools Pro</title>
+
+<meta name="description" content="Free Online Image Tools">
+<meta name="keywords" content="Image Resizer, Image Compressor, Image Converter, Crop Image, Image to PDF">
+<meta name="author" content="ImageTools Pro">
+
+</head>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🖼 Image Resizer</h1>
+
+<input
+type="file"
+id="upload"
+accept="image/*">
+
+<div class="row">
+
+<input
+type="number"
+id="width"
+placeholder="Width">
+
+<input
+type="number"
+id="height"
+placeholder="Height">
+
+</div>
+
+<label>
+
+Quality :
+<span id="qText">90</span>%
+
+</label>
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="90">
+
+<button onclick="resizeImage()">
+
+Resize Image
+
+</button>
+
+<img id="preview">
+
+<a id="download" style="display:none">
+
+<button type="button">
+
+Download Image
+
+</button>
+
+</a>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+<script>
+
+let img=new Image();
+
+quality.oninput=function(){
+
+qText.innerHTML=this.value;
+
+};
+
+upload.onchange=function(e){
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+reader.onload=function(ev){
+
+img.onload=function(){
+
+width.value=img.width;
+
+height.value=img.height;
+
+};
+
+img.src=ev.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+};
+
+function resizeImage(){
+
+if(!img.src){
+
+alert("Upload image first");
+
+return;
+
+}
+
+const w=parseInt(width.value);
+
+const h=parseInt(height.value);
+
+const q=quality.value/100;
+
+const canvas=document.getElementById("canvas");
+
+canvas.width=w;
+
+canvas.height=h;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0,w,h);
+
+canvas.toBlob(function(blob){
+
+const url=URL.createObjectURL(blob);
+
+preview.src=url;
+
+preview.style.display="block";
+
+download.href=url;
+
+download.download="resized-image.jpg";
+
+download.style.display="block";
+
+},"image/jpeg",q);
+
+}
+
+</script>
+
+
+</body>
+</body>
+</html>

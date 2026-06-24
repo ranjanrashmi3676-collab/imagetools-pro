@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Image Compressor | ImageTools Pro</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+color:#fff;
+}
+
+.container{
+width:100%;
+max-width:650px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+padding:25px;
+border-radius:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input[type=file]{
+width:100%;
+padding:12px;
+background:#fff;
+color:#000;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin:15px 0 5px;
+}
+
+input[type=range]{
+width:100%;
+}
+
+button{
+width:100%;
+padding:15px;
+margin-top:20px;
+background:#00e5ff;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#00bcd4;
+}
+
+img{
+width:100%;
+display:none;
+margin-top:20px;
+border-radius:15px;
+}
+
+.info{
+margin-top:15px;
+line-height:30px;
+}
+
+canvas{
+display:none;
+}
+
+a{
+text-decoration:none;
+}
+</style>
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUBLISHER_ID"
+crossorigin="anonymous"></script>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ImageTools Pro</title>
+
+<meta name="description" content="Free Online Image Tools">
+<meta name="keywords" content="Image Resizer, Image Compressor, Image Converter, Crop Image, Image to PDF">
+<meta name="author" content="ImageTools Pro">
+
+</head>
+</head>
+<body>
+
+<div class="container">
+
+<h1>📉 Image Compressor</h1>
+
+<input type="file" id="upload" accept="image/*">
+
+<label>
+Compression Quality :
+<span id="qText">70</span>%
+</label>
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="70">
+
+<div class="info">
+Original Size :
+<span id="oldSize">0 KB</span>
+<br>
+Compressed Size :
+<span id="newSize">0 KB</span>
+</div>
+
+<button onclick="compressImage()">
+Compress Image
+</button>
+
+<img id="preview">
+
+<a id="download" style="display:none">
+<button type="button">
+Download Compressed Image
+</button>
+</a>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+<script>
+
+let img=new Image();
+let originalFile;
+
+quality.oninput=function(){
+qText.innerHTML=this.value;
+}
+
+upload.onchange=function(e){
+
+originalFile=e.target.files[0];
+
+if(!originalFile)return;
+
+oldSize.innerHTML=(originalFile.size/1024).toFixed(2)+" KB";
+
+const reader=new FileReader();
+
+reader.onload=function(ev){
+img.src=ev.target.result;
+}
+
+reader.readAsDataURL(originalFile);
+
+}
+
+function compressImage(){
+
+if(!img.src){
+alert("Upload image first");
+return;
+}
+
+const canvas=document.getElementById("canvas");
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0);
+
+canvas.toBlob(function(blob){
+
+const url=URL.createObjectURL(blob);
+
+preview.src=url;
+preview.style.display="block";
+
+newSize.innerHTML=(blob.size/1024).toFixed(2)+" KB";
+
+download.href=url;
+download.download="compressed-image.jpg";
+download.style.display="block";
+
+},"image/jpeg",quality.value/100);
+
+}
+
+</script>
+
+</body>
+</html>

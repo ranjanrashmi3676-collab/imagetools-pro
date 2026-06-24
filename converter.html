@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Image Converter | ImageTools Pro</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+color:#fff;
+}
+
+.container{
+width:100%;
+max-width:650px;
+background:rgba(255,255,255,.08);
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:12px 0;
+border:none;
+border-radius:10px;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#00e5ff;
+border:none;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#00bcd4;
+}
+
+img{
+width:100%;
+margin-top:20px;
+display:none;
+border-radius:15px;
+}
+
+canvas{
+display:none;
+}
+
+a{
+text-decoration:none;
+}
+</style>
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUBLISHER_ID"
+crossorigin="anonymous"></script>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ImageTools Pro</title>
+
+<meta name="description" content="Free Online Image Tools">
+<meta name="keywords" content="Image Resizer, Image Compressor, Image Converter, Crop Image, Image to PDF">
+<meta name="author" content="ImageTools Pro">
+
+</head>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔄 Image Converter</h1>
+
+<input type="file" id="upload" accept="image/*">
+
+<select id="format">
+<option value="image/jpeg">JPG</option>
+<option value="image/png">PNG</option>
+<option value="image/webp">WEBP</option>
+</select>
+
+<button onclick="convertImage()">
+Convert Image
+</button>
+
+<img id="preview">
+
+<a id="download" style="display:none">
+<button type="button">
+Download Converted Image
+</button>
+</a>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+<script>
+
+let img=new Image();
+
+upload.onchange=function(e){
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+reader.onload=function(ev){
+
+img.src=ev.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+function convertImage(){
+
+if(!img.src){
+
+alert("Please upload an image.");
+
+return;
+
+}
+
+const canvas=document.getElementById("canvas");
+
+canvas.width=img.width;
+canvas.height=img.height;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0);
+
+const type=format.value;
+
+canvas.toBlob(function(blob){
+
+const url=URL.createObjectURL(blob);
+
+preview.src=url;
+preview.style.display="block";
+
+let ext="jpg";
+
+if(type=="image/png") ext="png";
+if(type=="image/webp") ext="webp";
+
+download.href=url;
+download.download="converted-image."+ext;
+download.style.display="block";
+
+},type,0.95);
+
+}
+
+</script>
+
+</body>
+</html>
