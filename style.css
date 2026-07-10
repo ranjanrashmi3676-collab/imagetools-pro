@@ -223,3 +223,15 @@ padding:80px 20px;
     margin:20px;
     border-radius:15px;
 }
+footer{
+    text-align:center;
+    padding:20px;
+    font-size:14px;
+    line-height:2;
+}
+
+footer a{
+    color:#8b5cf6;
+    text-decoration:none;
+    margin:0 5px;
+}
