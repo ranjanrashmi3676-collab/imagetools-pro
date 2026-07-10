@@ -195,4 +195,25 @@ section{
 padding:80px 20px;
 }
 
+}.faq{
+    padding:40px 20px;
+    text-align:center;
+    margin-top:40px;
+}
+
+.faq h2{
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.faq h3{
+    margin-top:20px;
+    color:#ffffff;
+}
+
+.faq p{
+    color:#cccccc;
+    max-width:700px;
+    margin:auto;
+    line-height:1.6;
 }
