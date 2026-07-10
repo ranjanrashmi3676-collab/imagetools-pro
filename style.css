@@ -235,3 +235,19 @@ footer a{
     text-decoration:none;
     margin:0 5px;
 }
+@media (max-width:768px){
+
+nav{
+    gap:15px;
+}
+
+nav a{
+    font-size:18px;
+}
+
+.hero h1{
+    font-size:42px;
+    padding:0 15px;
+}
+
+}
