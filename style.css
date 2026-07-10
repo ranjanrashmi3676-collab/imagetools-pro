@@ -368,3 +368,67 @@ footer a:hover{
         font-size:18px;
     }
 }
+/* Terms, Privacy, About, Disclaimer Pages */
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px 25px;
+}
+
+.container h1{
+    font-size:48px;
+    color:#ffffff;
+    margin-bottom:30px;
+}
+
+.container h2{
+    font-size:34px;
+    color:#ffffff;
+    margin-top:45px;
+    margin-bottom:20px;
+}
+
+.container p,
+.container li{
+    font-size:21px;
+    line-height:1.9;
+    color:#e0e0e0;
+}
+
+.container ul{
+    padding-left:30px;
+}
+
+.container strong{
+    color:#00e5ff;
+}
+
+.page-card{
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 10px 30px rgba(0,255,255,0.12);
+}
+
+@media(max-width:768px){
+
+    .container{
+        padding:25px 20px;
+    }
+
+    .container h1{
+        font-size:38px;
+    }
+
+    .container h2{
+        font-size:28px;
+    }
+
+    .container p,
+    .container li{
+        font-size:18px;
+    }
+}
